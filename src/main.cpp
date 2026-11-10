@@ -6,7 +6,7 @@
 #include <iomanip>
 
 
-const size_t n = 6;
+const size_t n = 6; //200
 const int itmax = 150;
 const double epsilon = 1.0e-8;
 
@@ -46,9 +46,10 @@ int main(){
             lambda_values << k << "," << it << "," << new_lambda << "\n";
             
             if(std::abs((new_lambda-old_lambda)/old_lambda) < epsilon) break;
-
+            
             old_lambda = new_lambda;
         }
+        //lambda_values << k << "," << new_lambda << "\n";
         eigenvectors[k] = x;
         eigenvalues[k] = new_lambda;
     }
