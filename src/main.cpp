@@ -53,5 +53,42 @@ int main(){
         lambda_values << k+1 << "," << eigenvalues[k] << "\n";
     }
     lambda_values.close();
+
+    std::vector <std::vector <double>> A_num(n, std::vector <double>(n));
+    std::vector <std::vector <double>> A_inv(n, std::vector <double>(n));
+
+    for (std::size_t i = 0; i < n; i++) {
+        for (std::size_t j = 0; j < n; j++) {
+            for (std::size_t k = 0; k < n; k++) {
+                A_num[i][j] += eigenvalues[k] * eigenvectors[k][i] * eigenvectors[k][j];
+                A_inv[i][j] += (1.0 / eigenvalues[k]) * eigenvectors[k][i] * eigenvectors[k][j];
+            }
+        }
+    }
+
+    std::ofstream matrix_reconstructed;
+    matrix_reconstructed.open("../data/reconstructed_matrices.csv");
+    if(!matrix_reconstructed.is_open()){
+        std::cerr << "Cannot open reconstructed_matrices.csv \n";
+        return 1;
+    }
+
+    matrix_reconstructed << "--- A_num ---\n";
+    for (std::size_t i = 0; i < n; i++) {
+        for (std::size_t j = 0; j < n; j++) {
+            matrix_reconstructed << std::setw(10) << std::setprecision(5) << A_num[i][j] << " ";
+        }
+        matrix_reconstructed << "\n";
+    }
+
+    matrix_reconstructed << "\n--- A_inv ---\n";
+    for (std::size_t i = 0; i < n; i++) {
+        for (std::size_t j = 0; j < n; j++) {
+            matrix_reconstructed << std::setw(10) << std::setprecision(5) << A_inv[i][j] << " ";
+        }
+        matrix_reconstructed << "\n";
+    }
+    matrix_reconstructed.close();
+
     return 0;
 }
