@@ -80,3 +80,12 @@ inline std::vector <double> v_normalization(const std::vector <double> &v){
     }
     return c;
 }
+
+inline std::vector <double> random_v_fill(std::size_t n){
+    std::vector <double> x (n, 0.0);
+
+    for(std::size_t i = 0; i < n; i++){
+        x[i] = (double)rand()/RAND_MAX;
+    }
+    return x;
+}
