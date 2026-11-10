@@ -3,10 +3,12 @@
 #include <fstream>
 #include <vector>
 #include <cmath>
+#include <iomanip>
+
 
 const size_t n = 6;
 const int itmax = 150;
-const double epsilon = 10.0e-8;
+const double epsilon = 1.0e-8;
 
 int main(){
     std::vector <std::vector <double>> A = A_matrix_population(n);
@@ -25,7 +27,7 @@ int main(){
         std::vector <double> x(n, 0.0);
         x = random_v_fill(n);
     
-        double old_lambda = 10.0e5;
+        double old_lambda = 1.0e5;
         double new_lambda;
 
         for(int it = 1; it <= itmax; it++){
@@ -39,18 +41,16 @@ int main(){
                     y[i] -= c * eigenvectors[m][i];
                 }
             }
-            double ynorm = v_norm(y);
-            for(size_t i = 0; i < n; i++){
-                x[i] = y[i]/ynorm;
-            }
+            x = v_normalization(y);
 
+            lambda_values << k << "," << it << "," << new_lambda << "\n";
+            
             if(std::abs((new_lambda-old_lambda)/old_lambda) < epsilon) break;
 
             old_lambda = new_lambda;
         }
         eigenvectors[k] = x;
         eigenvalues[k] = new_lambda;
-        lambda_values << k+1 << "," << eigenvalues[k] << "\n";
     }
     lambda_values.close();
 

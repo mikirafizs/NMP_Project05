@@ -4,10 +4,11 @@
 #include <iostream>
 #include <iomanip>
 #include <stdexcept>
-
+#include <cstdlib>
 
 
 // only for square matrices
+
 
 inline std::vector <std::vector <double>> A_matrix_population(std::size_t n){
     std::vector <std::vector <double>> A(n, std::vector <double> (n, 0.0));
@@ -73,6 +74,7 @@ inline double v_norm(const std::vector <double> &v){
 inline std::vector <double> v_normalization(const std::vector <double> &v){
     std::size_t nv = v.size();
     double vnorm = v_norm(v);
+
     std::vector <double> c (nv, 0.0);
 
     for(std::size_t i = 0; i < nv; i++){
